@@ -19,7 +19,7 @@ public class PlayerBack : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         playerMove.isBack = false;
 
@@ -36,5 +36,10 @@ public class PlayerBack : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         playerMove.isBack = true;
+
+        if (other.tag == "Player")
+        {
+            playerMove.isBack2 = false;
+        }
     }
 }

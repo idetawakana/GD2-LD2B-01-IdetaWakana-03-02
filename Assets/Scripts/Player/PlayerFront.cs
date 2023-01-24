@@ -19,7 +19,7 @@ public class PlayerFront : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         playerMove.isFront = false;
 
@@ -36,5 +36,10 @@ public class PlayerFront : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         playerMove.isFront = true;
+
+        if(other.tag == "Player")
+        {
+            playerMove.isFront2 = false;
+        }
     }
 }

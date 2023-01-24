@@ -11,6 +11,7 @@ public class StageMake : MonoBehaviour
     public float[,] stage;
 
     public GameObject floor;
+    public GameObject block;
 
     private Vector3 pos;
 
@@ -43,6 +44,13 @@ public class StageMake : MonoBehaviour
                     if (stage[i, j] == 1)
                     {
                         Instantiate(floor, pos, Quaternion.identity);
+                    }
+
+                    if (stage[i,j] == 2)
+                    {
+                        Instantiate(floor, pos, Quaternion.identity);
+                        pos.y = 0;
+                        Instantiate(block, pos, Quaternion.identity);
                     }
                 }
             }

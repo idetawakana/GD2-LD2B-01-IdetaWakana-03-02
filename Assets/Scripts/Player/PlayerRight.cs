@@ -20,7 +20,7 @@ public class PlayerRight : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         playerMove.isRight = false;
 
@@ -37,5 +37,10 @@ public class PlayerRight : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         playerMove.isRight = true;
+
+        if (other.tag == "Player")
+        {
+            playerMove.isRight2 = false;
+        }
     }
 }
