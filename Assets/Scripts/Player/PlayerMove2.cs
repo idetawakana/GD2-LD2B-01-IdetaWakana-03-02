@@ -3,23 +3,16 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerMove2 : MonoBehaviour
 {
     private StageMake stageMake;
 
     private Vector3 pos;
 
     public bool isRight;
-    public bool isRight2;
-
     public bool isLeft;
-    public bool isLeft2;
-
     public bool isBack;
-    public bool isBack2;
-
     public bool isFront;
-    public bool isFront2;
 
     // Start is called before the first frame update
     void Start()
@@ -46,16 +39,6 @@ public class PlayerMove : MonoBehaviour
                 {
                     pos.x += 1;
                 }
-                else
-                {
-                    if (isRight2 == true)
-                    {
-                        if (stageMake.stage[Mathf.RoundToInt(pos.x) + 2, Mathf.RoundToInt(pos.z)] != 0)
-                        {
-                            pos.x += 1;
-                        }
-                    }
-                }
             }
         }
 
@@ -66,16 +49,6 @@ public class PlayerMove : MonoBehaviour
                 if (isLeft == true)
                 {
                     pos.x -= 1;
-                }
-                else
-                {
-                    if (isLeft2 == true)
-                    {
-                        if (stageMake.stage[Mathf.RoundToInt(pos.x) - 2, Mathf.RoundToInt(pos.z)] != 0)
-                        {
-                            pos.x -= 1;
-                        }
-                    }
                 }
             }
         }
@@ -88,16 +61,6 @@ public class PlayerMove : MonoBehaviour
                 {
                     pos.z += 1;
                 }
-                else
-                {
-                    if (isBack2 == true)
-                    {
-                        if (stageMake.stage[Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.z) + 2] != 0)
-                        {
-                            pos.z += 1;
-                        }
-                    }
-                }
             }
         }
 
@@ -108,16 +71,6 @@ public class PlayerMove : MonoBehaviour
                 if (isFront == true)
                 {
                     pos.z -= 1;
-                }
-                else
-                {
-                    if (isFront2 == true)
-                    {
-                        if (stageMake.stage[Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.z) - 2] != 0)
-                        {
-                            pos.z -= 1;
-                        }
-                    }
                 }
             }
         }
