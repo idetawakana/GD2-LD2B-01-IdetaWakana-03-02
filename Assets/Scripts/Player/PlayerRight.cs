@@ -8,6 +8,8 @@ public class PlayerRight : MonoBehaviour
 
     private PlayerMove playerMove2;
 
+    private GoalBox goalBox;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,19 +19,29 @@ public class PlayerRight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnTriggerStay(Collider other)
     {
         playerMove.isRight = false;
 
-        if(other.tag == "Player")
+        if (other.tag == "Player")
         {
             playerMove2 = other.gameObject.GetComponent<PlayerMove>();
-            if(playerMove2.isRight == true)
+            if (playerMove2.isRight == true)
             {
                 playerMove.isRight2 = true;
+            }
+        }
+
+        if (other.tag == "GoalBox")
+        {
+            goalBox = other.gameObject.GetComponent<GoalBox>();
+            if (goalBox.level <= playerMove.level)
+            {
+                playerMove.isRight2 = true;
+                goalBox.isRight = true;
             }
         }
     }
@@ -40,6 +52,13 @@ public class PlayerRight : MonoBehaviour
 
         if (other.tag == "Player")
         {
+            playerMove.isRight2 = false;
+        }
+
+        if (other.tag == "GoalBox")
+        {
+            goalBox = other.gameObject.GetComponent<GoalBox>();
+            goalBox.isRight = false;
             playerMove.isRight2 = false;
         }
     }

@@ -7,6 +7,8 @@ public class PlayerBack : MonoBehaviour
     private PlayerMove playerMove;
     private PlayerMove playerMove2;
 
+    private GoalBox goalBox;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +33,16 @@ public class PlayerBack : MonoBehaviour
                 playerMove.isBack2 = true;
             }
         }
+
+        if (other.tag == "GoalBox")
+        {
+            goalBox = other.gameObject.GetComponent<GoalBox>();
+            if (goalBox.level <= playerMove.level)
+            {
+                playerMove.isBack2 = true;
+                goalBox.isBack = true;
+            }
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -39,6 +51,13 @@ public class PlayerBack : MonoBehaviour
 
         if (other.tag == "Player")
         {
+            playerMove.isBack2 = false;
+        }
+
+        if (other.tag == "GoalBox")
+        {
+            goalBox = other.gameObject.GetComponent<GoalBox>();
+            goalBox.isBack = false;
             playerMove.isBack2 = false;
         }
     }
