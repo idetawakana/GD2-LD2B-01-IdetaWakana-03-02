@@ -23,6 +23,16 @@ public class PlayerMove : MonoBehaviour
 
     public float level;
 
+    public float levelRight;
+    public float levelLeft;
+    public float levelBack;
+    public float levelFront;
+
+    public bool isBlockRight;
+    public bool isBlockLeft;
+    public bool isBlockBack;
+    public bool isBlockFront;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,9 +66,22 @@ public class PlayerMove : MonoBehaviour
                         {
                             pos.x += 1;
                         }
+                        //else
+                        //{
+                        //    isRight2 = false;
+                        //}
                     }
                 }
             }
+        }
+
+        if (stageMake.stage[Mathf.RoundToInt(pos.x) + 2, Mathf.RoundToInt(pos.z)] == 1)
+        {
+            //pos.x += 1;
+        }
+        else
+        {
+            isRight2 = false;
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
@@ -82,6 +105,15 @@ public class PlayerMove : MonoBehaviour
             }
         }
 
+        if (stageMake.stage[Mathf.RoundToInt(pos.x) - 2, Mathf.RoundToInt(pos.z)] == 1)
+        {
+            //pos.x -= 1;
+        }
+        else
+        {
+            isLeft2 = false;
+        }
+
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
             if (stageMake.stage[Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.z) + 1] == 1)
@@ -103,6 +135,15 @@ public class PlayerMove : MonoBehaviour
             }
         }
 
+        if (stageMake.stage[Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.z) + 2] == 1)
+        {
+            //pos.z += 1;
+        }
+        else
+        {
+            isBack2 = false;
+        }
+
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
             if (stageMake.stage[Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.z) - 1] == 1)
@@ -122,6 +163,15 @@ public class PlayerMove : MonoBehaviour
                     }
                 }
             }
+        }
+
+        if (stageMake.stage[Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.z) - 2] == 1)
+        {
+            //pos.z -= 1;
+        }
+        else
+        {
+            isFront2 = false;
         }
 
         transform.position = pos;

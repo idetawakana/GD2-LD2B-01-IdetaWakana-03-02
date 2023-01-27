@@ -22,6 +22,15 @@ public class PlayerRight : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            playerMove2 = other.gameObject.GetComponent<PlayerMove>();
+            playerMove.levelLeft += playerMove2.levelLeft;
+        }
+    }
+
     private void OnTriggerStay(Collider other)
     {
         playerMove.isRight = false;
@@ -33,12 +42,40 @@ public class PlayerRight : MonoBehaviour
             {
                 playerMove.isRight2 = true;
             }
+            else
+            {
+                if(playerMove2.isBlockRight == true)
+                {
+                    if(playerMove2.isRight2 == true)
+                    {
+                        playerMove.isRight2 = true;
+                    }
+                    else
+                    {
+                        playerMove.isRight2 = false;
+                    }
+                }
+                else
+                {
+                    if (playerMove2.isRight2 == true)
+                    {
+                        playerMove.isRight2 = true;
+                    }
+                    else
+                    {
+                        playerMove.isRight2 = false;
+                    }
+                }
+            }
         }
 
         if (other.tag == "GoalBox")
         {
             goalBox = other.gameObject.GetComponent<GoalBox>();
-            if (goalBox.level <= playerMove.level)
+
+            playerMove.isBlockRight = true;
+
+            if (goalBox.level <= playerMove.levelRight)
             {
                 playerMove.isRight2 = true;
                 goalBox.isRight = true;
@@ -53,6 +90,7 @@ public class PlayerRight : MonoBehaviour
         if (other.tag == "Player")
         {
             playerMove.isRight2 = false;
+            playerMove.levelLeft = 1;
         }
 
         if (other.tag == "GoalBox")
@@ -60,6 +98,7 @@ public class PlayerRight : MonoBehaviour
             goalBox = other.gameObject.GetComponent<GoalBox>();
             goalBox.isRight = false;
             playerMove.isRight2 = false;
+            playerMove.isBlockRight = false;
         }
     }
 }

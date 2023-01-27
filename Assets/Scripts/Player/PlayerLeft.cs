@@ -20,6 +20,15 @@ public class PlayerLeft : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Player")
+        {
+            playerMove2 = other.gameObject.GetComponent<PlayerMove>();
+            playerMove.levelRight += playerMove2.levelRight;
+        }
+    }
+
     private void OnTriggerStay(Collider other)
     {
         playerMove.isLeft = false;
@@ -31,12 +40,29 @@ public class PlayerLeft : MonoBehaviour
             {
                 playerMove.isLeft2 = true;
             }
+            else
+            {
+                if (playerMove2.isBlockLeft == true)
+                {
+                    if (playerMove2.isLeft2 == true)
+                    {
+                        playerMove.isLeft2 = true;
+                    }
+                    else
+                    {
+                        playerMove.isLeft2 = false;
+                    }
+                }
+            }
         }
 
         if (other.tag == "GoalBox")
         {
             goalBox = other.gameObject.GetComponent<GoalBox>();
-            if (goalBox.level <= playerMove.level)
+
+            playerMove.isBlockLeft = true;
+
+            if (goalBox.level <= playerMove.levelLeft)
             {
                 playerMove.isLeft2 = true;
                 goalBox.isLeft = true;
@@ -50,6 +76,7 @@ public class PlayerLeft : MonoBehaviour
         if (other.tag == "Player")
         {
             playerMove.isLeft2 = false;
+            playerMove.levelRight = 1;
         }
 
         if (other.tag == "GoalBox")
@@ -57,6 +84,7 @@ public class PlayerLeft : MonoBehaviour
             goalBox = other.gameObject.GetComponent<GoalBox>();
             goalBox.isLeft = false;
             playerMove.isLeft2 = false;
+            playerMove.isBlockLeft = false;
         }
     }
 }

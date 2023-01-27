@@ -137,6 +137,11 @@ MonoBehaviour:
   isBack2: 0
   isFront: 0
   isFront2: 0
+  level: 0
+  levelRight: 1
+  levelLeft: 1
+  levelBack: 1
+  levelFront: 1
 --- !u!1 &2348632002016000432
 GameObject:
   m_ObjectHideFlags: 0

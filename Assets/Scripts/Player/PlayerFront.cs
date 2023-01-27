@@ -21,6 +21,15 @@ public class PlayerFront : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            playerMove2 = other.gameObject.GetComponent<PlayerMove>();
+            playerMove.levelBack += playerMove2.levelBack;
+        }
+    }
+
     private void OnTriggerStay(Collider other)
     {
         playerMove.isFront = false;
@@ -32,12 +41,29 @@ public class PlayerFront : MonoBehaviour
             {
                 playerMove.isFront2 = true;
             }
+            else
+            {
+                if (playerMove2.isBlockFront == true)
+                {
+                    if (playerMove2.isFront2 == true)
+                    {
+                        playerMove.isFront2 = true;
+                    }
+                    else
+                    {
+                        playerMove.isFront2 = false;
+                    }
+                }
+            }
         }
 
         if (other.tag == "GoalBox")
         {
             goalBox = other.gameObject.GetComponent<GoalBox>();
-            if (goalBox.level <= playerMove.level)
+
+            playerMove.isBlockFront = true;
+
+            if (goalBox.level <= playerMove.levelFront)
             {
                 playerMove.isFront2 = true;
                 goalBox.isFront = true;
@@ -52,6 +78,7 @@ public class PlayerFront : MonoBehaviour
         if(other.tag == "Player")
         {
             playerMove.isFront2 = false;
+            playerMove.levelBack = 1;
         }
 
         if (other.tag == "GoalBox")
@@ -59,6 +86,7 @@ public class PlayerFront : MonoBehaviour
             goalBox = other.gameObject.GetComponent<GoalBox>();
             goalBox.isFront = false;
             playerMove.isFront2 = false;
+            playerMove.isBlockFront = false;
         }
     }
 }

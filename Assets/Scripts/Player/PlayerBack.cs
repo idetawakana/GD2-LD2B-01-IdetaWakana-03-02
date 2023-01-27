@@ -21,6 +21,15 @@ public class PlayerBack : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            playerMove2 = other.gameObject.GetComponent<PlayerMove>();
+            playerMove.levelFront += playerMove2.levelFront;
+        }
+    }
+
     private void OnTriggerStay(Collider other)
     {
         playerMove.isBack = false;
@@ -32,12 +41,29 @@ public class PlayerBack : MonoBehaviour
             {
                 playerMove.isBack2 = true;
             }
+            else
+            {
+                if (playerMove2.isBlockBack == true)
+                {
+                    if (playerMove2.isBack2 == true)
+                    {
+                        playerMove.isBack2 = true;
+                    }
+                    else
+                    {
+                        playerMove.isBack2 = false;
+                    }
+                }
+            }
         }
 
         if (other.tag == "GoalBox")
         {
             goalBox = other.gameObject.GetComponent<GoalBox>();
-            if (goalBox.level <= playerMove.level)
+
+            playerMove.isBlockBack = true;
+
+            if (goalBox.level <= playerMove.levelBack)
             {
                 playerMove.isBack2 = true;
                 goalBox.isBack = true;
@@ -52,6 +78,7 @@ public class PlayerBack : MonoBehaviour
         if (other.tag == "Player")
         {
             playerMove.isBack2 = false;
+            playerMove.levelFront = 1;
         }
 
         if (other.tag == "GoalBox")
@@ -59,6 +86,7 @@ public class PlayerBack : MonoBehaviour
             goalBox = other.gameObject.GetComponent<GoalBox>();
             goalBox.isBack = false;
             playerMove.isBack2 = false;
+            playerMove.isBlockBack = false;
         }
     }
 }
