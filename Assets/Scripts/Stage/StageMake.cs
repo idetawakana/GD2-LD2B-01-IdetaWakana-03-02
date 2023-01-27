@@ -18,15 +18,28 @@ public class StageMake : MonoBehaviour
     private bool isBuild;
 
     private float cameraX;
+
+    enum TileType
+    { 
+        End = 0,
+        Floor = 1,
+        Wall = 2
+    }
+
+    private void Awake()
+    {
+        
+        stageSet = GetComponent<StageSet>();
+        stage = stageSet.stage;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        stageSet = GetComponent<StageSet>();
 
         GameObject cameraObj = GameObject.Find("Main Camera");
         cameraPos = cameraObj.GetComponent<CameraPos>();
 
-        stage = stageSet.stage;
 
         isBuild = false;
     }
@@ -61,5 +74,16 @@ public class StageMake : MonoBehaviour
 
             isBuild = true;
         }
+    }
+
+    public bool IsFloor(Vector2Int grid)
+    {
+        return stage[grid.x, grid.y] == (int)TileType.Floor;
+    }
+
+    public bool IsBlock(Vector2Int grid)
+    {
+        return stage[grid.x, grid.y] == (int)TileType.Wall ||
+            stage[grid.x, grid.y] == (int)TileType.End;
     }
 }

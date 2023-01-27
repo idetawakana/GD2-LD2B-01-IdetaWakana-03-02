@@ -96,7 +96,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2070113370746694096}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -137,11 +137,15 @@ MonoBehaviour:
   isBack2: 0
   isFront: 0
   isFront2: 0
-  level: 0
+  level: 1
   levelRight: 1
   levelLeft: 1
   levelBack: 1
   levelFront: 1
+  isBlockRight: 0
+  isBlockLeft: 0
+  isBlockBack: 0
+  isBlockFront: 0
 --- !u!1 &2348632002016000432
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,7 +156,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3041373587198913301}
   - component: {fileID: 8926652278004697059}
-  - component: {fileID: 5087212547269759540}
+  - component: {fileID: 3953648877887880414}
   m_Layer: 0
   m_Name: front
   m_TagString: Untagged
@@ -185,9 +189,9 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.1, z: 0.9}
-  m_Center: {x: -0.2, y: 0, z: -0.2}
---- !u!114 &5087212547269759540
+  m_Size: {x: 0.1, y: 0.1, z: 0.1}
+  m_Center: {x: 0, y: 0, z: -1}
+--- !u!114 &3953648877887880414
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -196,9 +200,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2348632002016000432}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43de77f1986b20a4da17fb84cafbb663, type: 3}
+  m_Script: {fileID: 11500000, guid: f5bd6cc45d15f9c47ab286409a93f271, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myDirection: 3
 --- !u!1 &3025977700499469928
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,7 +214,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2751485033934336723}
   - component: {fileID: 1435949940763789562}
-  - component: {fileID: 3631572194433930822}
+  - component: {fileID: 2261403370794886318}
   m_Layer: 0
   m_Name: left
   m_TagString: Untagged
@@ -242,9 +247,9 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.9, y: 0.1, z: 0.1}
-  m_Center: {x: -0.2, y: 0, z: -0.2}
---- !u!114 &3631572194433930822
+  m_Size: {x: 0.1, y: 0.1, z: 0.1}
+  m_Center: {x: -1, y: 0, z: 0}
+--- !u!114 &2261403370794886318
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -253,9 +258,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3025977700499469928}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7c6f9b0f74de594ca350f858cf225ed, type: 3}
+  m_Script: {fileID: 11500000, guid: f5bd6cc45d15f9c47ab286409a93f271, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myDirection: 1
 --- !u!1 &6223743389166192448
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,7 +272,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6393921126581119149}
   - component: {fileID: 9178329176769037663}
-  - component: {fileID: 6262992243219083918}
+  - component: {fileID: 3227287651700335481}
   m_Layer: 0
   m_Name: right
   m_TagString: Untagged
@@ -299,9 +305,9 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.9, y: 0.1, z: 0.1}
-  m_Center: {x: 0.2, y: 0, z: 0.2}
---- !u!114 &6262992243219083918
+  m_Size: {x: 0.1, y: 0.1, z: 0.1}
+  m_Center: {x: 1, y: 0, z: 0}
+--- !u!114 &3227287651700335481
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -310,9 +316,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6223743389166192448}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 835494e2384adb348a42fdc8ac7abe56, type: 3}
+  m_Script: {fileID: 11500000, guid: f5bd6cc45d15f9c47ab286409a93f271, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myDirection: 0
 --- !u!1 &8483104865499436278
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,7 +330,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5736259034399764968}
   - component: {fileID: 3357669247826647092}
-  - component: {fileID: 4217909643402765796}
+  - component: {fileID: 1233498247449017249}
   m_Layer: 0
   m_Name: back
   m_TagString: Untagged
@@ -356,9 +363,9 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.1, z: 0.9}
-  m_Center: {x: 0.2, y: 0, z: 0.1}
---- !u!114 &4217909643402765796
+  m_Size: {x: 0.1, y: 0.1, z: 0.1}
+  m_Center: {x: 0, y: 0, z: 1}
+--- !u!114 &1233498247449017249
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -367,6 +374,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8483104865499436278}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2192cca5f8c21d241a0dcfffcce9d170, type: 3}
+  m_Script: {fileID: 11500000, guid: f5bd6cc45d15f9c47ab286409a93f271, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myDirection: 2

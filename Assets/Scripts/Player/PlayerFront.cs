@@ -1,92 +1,110 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
 
-public class PlayerFront : MonoBehaviour
-{
-    private PlayerMove playerMove;
-    private PlayerMove playerMove2;
+//public class PlayerFront : MonoBehaviour
+//{
+//    private PlayerMove playerMove;
+//    private PlayerMove playerMove2;
+//    private PlayerMove playerMove3;
 
-    private GoalBox goalBox;
+//    private PlayerCollider playerCollider;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        playerMove = transform.parent.gameObject.GetComponent<PlayerMove>();
-    }
+//    private
+//    GoalBlock;
 
-    // Update is called once per frame
-    void Update()
-    {
+//    // Start is called before the first frame update
+//    void Start()
+//    {
+//        playerMove = transform.parent.gameObject.GetComponent<PlayerMove>();
 
-    }
+//        playerCollider = transform.parent.gameObject.GetComponent<PlayerCollider>();
+//    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            playerMove2 = other.gameObject.GetComponent<PlayerMove>();
-            playerMove.levelBack += playerMove2.levelBack;
-        }
-    }
+//    // Update is called once per frame
+//    void Update()
+//    {
 
-    private void OnTriggerStay(Collider other)
-    {
-        playerMove.isFront = false;
+//    }
 
-        if (other.tag == "Player")
-        {
-            playerMove2 = other.gameObject.GetComponent<PlayerMove>();
-            if (playerMove2.isFront == true)
-            {
-                playerMove.isFront2 = true;
-            }
-            else
-            {
-                if (playerMove2.isBlockFront == true)
-                {
-                    if (playerMove2.isFront2 == true)
-                    {
-                        playerMove.isFront2 = true;
-                    }
-                    else
-                    {
-                        playerMove.isFront2 = false;
-                    }
-                }
-            }
-        }
+//    private void OnTriggerEnter(Collider other)
+//    {
+//        //if (other.tag == "Player")
+//        //{
+//        //    playerMove2 = other.gameObject.GetComponent<PlayerMove>();
+//        //    playerMove.levelBack += playerMove2.levelBack;
+//        //}
 
-        if (other.tag == "GoalBox")
-        {
-            goalBox = other.gameObject.GetComponent<GoalBox>();
+//        if (other.tag == "Player")
+//        {
+//            playerMove3 = other.gameObject.GetComponent<PlayerMove>();
 
-            playerMove.isBlockFront = true;
+//            playerCollider.nextPlayerMove.Add(PlayerCollider.NextDirection.Front, playerMove);
+//        }
+//    }
 
-            if (goalBox.level <= playerMove.levelFront)
-            {
-                playerMove.isFront2 = true;
-                goalBox.isFront = true;
-            }
-        }
-    }
+//    private void OnTriggerStay(Collider other)
+//    {
+//        //playerMove.isFront = false;
 
-    private void OnTriggerExit(Collider other)
-    {
-        playerMove.isFront = true;
+//        if (other.tag == "Player")
+//        {
+//            playerMove2 = other.gameObject.GetComponent<PlayerMove>();
+//            if (playerMove2.isFront == true)
+//            {
+//                playerMove.isFront2 = true;
+//            }
+//            else
+//            {
+//                if (playerMove2.isBlockFront == true)
+//                {
+//                    if (playerMove2.isFront2 == true)
+//                    {
+//                        playerMove.isFront2 = true;
+//                    }
+//                    else
+//                    {
+//                        playerMove.isFront2 = false;
+//                    }
+//                }
+//            }
+//        }
 
-        if(other.tag == "Player")
-        {
-            playerMove.isFront2 = false;
-            playerMove.levelBack = 1;
-        }
+//        if (other.tag == "GoalBlock")
+//        {
+//            GoalBlock = other.gameObject.GetComponent<GoalBlock>();
 
-        if (other.tag == "GoalBox")
-        {
-            goalBox = other.gameObject.GetComponent<GoalBox>();
-            goalBox.isFront = false;
-            playerMove.isFront2 = false;
-            playerMove.isBlockFront = false;
-        }
-    }
-}
+//            playerMove.isBlockFront = true;
+
+//            if (GoalBlock.level <= playerMove.levelFront)
+//            {
+//                playerMove.isFront2 = true;
+//                GoalBlock.isFront = true;
+//            }
+//        }
+//    }
+
+//    private void OnTriggerExit(Collider other)
+//    {
+//        //playerMove.isFront = true;
+
+//        if(other.tag == "Player")
+//        {
+//            playerMove.isFront2 = false;
+//            playerMove.levelBack = 1;
+//        }
+
+//        if (other.tag == "GoalBlock")
+//        {
+//            GoalBlock = other.gameObject.GetComponent<GoalBlock>();
+//            GoalBlock.isFront = false;
+//            playerMove.isFront2 = false;
+//            playerMove.isBlockFront = false;
+//        }
+
+//        if (other.tag == "Player")
+//        {
+//            playerCollider.nextPlayerMove.Remove(PlayerCollider.NextDirection.Front);
+//        }
+//    }
+//}

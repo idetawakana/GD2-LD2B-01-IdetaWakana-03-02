@@ -134,10 +134,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player2
       objectReference: {fileID: 0}
-    - target: {fileID: 2070113370746694097, guid: 49ddef40b74c4a34881ae3cbd29f9c61, type: 3}
-      propertyPath: level
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2070113370746694101, guid: 49ddef40b74c4a34881ae3cbd29f9c61, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -460,7 +456,7 @@ GameObject:
   - component: {fileID: 1250673045}
   m_Layer: 0
   m_Name: GoalBox
-  m_TagString: GoalBox
+  m_TagString: GoalBlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -585,6 +581,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2070113370746694096, guid: 49ddef40b74c4a34881ae3cbd29f9c61, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2070113370746694097, guid: 49ddef40b74c4a34881ae3cbd29f9c61, type: 3}
       propertyPath: level
       value: 1
@@ -633,5 +633,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5179846739092397584, guid: 49ddef40b74c4a34881ae3cbd29f9c61, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 49ddef40b74c4a34881ae3cbd29f9c61, type: 3}
