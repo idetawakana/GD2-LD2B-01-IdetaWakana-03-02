@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class GoalBlock : MonoBehaviour
 {
@@ -10,6 +9,9 @@ public class GoalBlock : MonoBehaviour
     private StageSelect stageSelect;
 
     public GameManager gameManager;
+
+    public GameObject Text1;
+    public GameObject Text2;
 
     private Vector3 pos;
 
@@ -47,11 +49,15 @@ public class GoalBlock : MonoBehaviour
         {
             transform.position = pos1;
             level = level1;
+            Text1.SetActive(true);
+            Text2.SetActive(false);
         }
         else if (stageSelect.stageNum == 2)
         {
             transform.position = pos2;
             level = level2;
+            Text1.SetActive(false);
+            Text2.SetActive(true);
         }
         else if (stageSelect.stageNum == 3)
         {
