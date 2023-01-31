@@ -2,12 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using static UnityEngine.Networking.UnityWebRequest;
 
 public class PlayerMove : MonoBehaviour
 {
     private StageMake stageMake;
 
+    private StageSelect stageSelect;
+
+    public Vector3 pos1;
+    public Vector3 pos2;
+    public Vector3 pos3;
 
     public bool isRight;
     public bool isRight2;
@@ -28,6 +34,8 @@ public class PlayerMove : MonoBehaviour
     public float levelBack;
     public float levelFront;
 
+    public bool isLevelAdd;
+
     public bool isBlockRight;
     public bool isBlockLeft;
     public bool isBlockBack;
@@ -46,6 +54,22 @@ public class PlayerMove : MonoBehaviour
 
         nextPlayerMove = new Dictionary<NextDirection, PlayerMove>();
         nextPlayerMoveBlock = new Dictionary<NextDirection, GoalBlock>();
+
+        GameObject selectObj = GameObject.Find("StageSelect");
+        stageSelect = selectObj.GetComponent<StageSelect>();
+
+        if (stageSelect.stageNum == 1)
+        {
+            transform.position = pos1;
+        }
+        else if (stageSelect.stageNum == 2)
+        {
+            transform.position = pos2;
+        }
+        else if (stageSelect.stageNum == 3)
+        {
+            transform.position = pos3;
+        }
 
         //isRight = true;
         //isLeft = true;
@@ -87,7 +111,14 @@ public class PlayerMove : MonoBehaviour
         // directionÇÃå¸Ç´Ç…ó◊ê⁄ÇµÇƒÇ¢ÇÈâ”èäÇ…ÅAè·äQï®Ç™Ç†ÇÈÇ©î€Ç©ÅB
         if (nextPlayerMoveBlock.ContainsKey(direction))
         {
-            return SetMovable(direction, nextPlayerMoveBlock[direction].CheckNextTile(direction));
+            if (IsPushNextGoalBlock(direction))
+            {
+                return SetMovable(direction, nextPlayerMoveBlock[direction].CheckNextTile(direction));
+            }
+            else
+            {
+                return SetMovable(direction, false);
+            }
         }
 
         if (stageMake.IsFloor(GetGrid(direction)))
@@ -102,6 +133,12 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //levelRight += 
+        }
 
         ////player
         //isRight = !nextPlayerMove.ContainsKey(NextDirection.Right);
@@ -331,7 +368,7 @@ public class PlayerMove : MonoBehaviour
         Vector3 pos = transform.position;
         Vector2Int result =
             new Vector2Int(Mathf.RoundToInt(pos.x) + offsetX, Mathf.RoundToInt(pos.z) + offsetZ);
-//        Debug.Log("Name:"+gameObject.name+" Position:" + pos);
+        //        Debug.Log("Name:"+gameObject.name+" Position:" + pos);
         //Debug.Log("PositionX:" + (result.x - offsetX) + "<-" + pos.x + "\nPositionZ" + (result.y - offsetZ) + "<-" + pos.z);
         return result;
     }
@@ -362,6 +399,74 @@ public class PlayerMove : MonoBehaviour
     private void PushNextGoalBlock(NextDirection moveDiretion)
     {
         if (!nextPlayerMoveBlock.ContainsKey(moveDiretion)) { return; }
-        nextPlayerMoveBlock[moveDiretion].Push(moveDiretion);
+
+        float pushLevel = GetPushLevel(moveDiretion);
+
+        if (nextPlayerMoveBlock[moveDiretion].level <= pushLevel)
+        {
+            nextPlayerMoveBlock[moveDiretion].Push(moveDiretion);
+        }
+    }
+
+    private bool IsPushNextGoalBlock(NextDirection moveDiretion)
+    {
+        float pushLevel = GetPushLevel(moveDiretion);
+
+        return (nextPlayerMoveBlock[moveDiretion].level <= pushLevel);
+    }
+
+    //public float GetLevel(NextDirection direction)
+    //{
+    //    float level = 1;
+    //    switch (direction)
+    //    {
+    //        case NextDirection.Right:
+    //            level = levelRight;
+    //            break;
+    //        case NextDirection.Left:
+    //            level = levelLeft;
+    //            break;
+    //        case NextDirection.Back:
+    //            level = levelBack;
+    //            break;
+    //        case NextDirection.Front:
+    //            level = levelFront;
+    //            break;
+    //        default:
+    //            level = 1;
+    //            break;
+    //    }
+    //    return level;
+    //}
+
+    private NextDirection GetBehind(NextDirection direction)
+    {
+        switch (direction)
+        {
+            case NextDirection.Right:
+                return NextDirection.Left;
+                break;
+            case NextDirection.Left:
+                return NextDirection.Right;
+                break;
+            case NextDirection.Back:
+                return NextDirection.Front;
+                break;
+            case NextDirection.Front:
+                return NextDirection.Back;
+                break;
+        }
+        return NextDirection.LeftBack;
+    }
+
+    public float GetPushLevel(NextDirection direction)
+    {
+        float pushLevel = 1;
+
+        if (nextPlayerMove.ContainsKey(GetBehind(direction)))
+        {
+            pushLevel += nextPlayerMove[GetBehind(direction)].GetPushLevel(direction);
+        }
+        return pushLevel;
     }
 }

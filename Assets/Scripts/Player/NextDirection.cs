@@ -8,4 +8,8 @@ public enum NextDirection
     Left,
     Back,
     Front,
+    RightBack,
+    RightFront,
+    LeftBack,
+    LeftFront
 };

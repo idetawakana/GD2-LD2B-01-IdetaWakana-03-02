@@ -7,9 +7,21 @@ public class GoalBlock : MonoBehaviour
 {
     private StageMake stageMake;
 
+    private StageSelect stageSelect;
+
+    public GameManager gameManager;
+
     private Vector3 pos;
 
+    public Vector3 pos1;
+    public Vector3 pos2;
+    public Vector3 pos3;
+
     public float level;
+
+    public float level1;
+    public float level2;
+    public float level3;
 
     public bool isRight;
     public bool isLeft;
@@ -25,6 +37,27 @@ public class GoalBlock : MonoBehaviour
     {
         GameObject stageObj = GameObject.Find("Stage");
         stageMake = stageObj.GetComponent<StageMake>();
+
+        GameObject selectObj = GameObject.Find("StageSelect");
+        stageSelect = selectObj.GetComponent<StageSelect>();
+
+        nextPlayerMoveBlock = new Dictionary<NextDirection, GoalBlock>();
+
+        if (stageSelect.stageNum == 1)
+        {
+            transform.position = pos1;
+            level = level1;
+        }
+        else if (stageSelect.stageNum == 2)
+        {
+            transform.position = pos2;
+            level = level2;
+        }
+        else if (stageSelect.stageNum == 3)
+        {
+            transform.position = pos3;
+            level = level3;
+        }
     }
 
     public bool CheckNextTile(NextDirection direction)
@@ -38,10 +71,10 @@ public class GoalBlock : MonoBehaviour
 
         // TODO: ゴールブロックも、付近のゴールブロックを探す必要があるため、四方向の当たり判定が必要。
         // directionの向きに隣接している箇所に、障害物があるか否か。
-        //if (nextPlayerMoveBlock.ContainsKey(direction))
-        //{
-        //    return SetMovable(direction, nextPlayerMoveBlock[direction].CheckNextTile(direction));
-        //}
+        if (nextPlayerMoveBlock.ContainsKey(direction))
+        {
+            return SetMovable(direction, nextPlayerMoveBlock[direction].CheckNextTile(direction));
+        }
 
         if (stageMake.IsFloor(GetGrid(direction)))
         {
@@ -243,5 +276,36 @@ public class GoalBlock : MonoBehaviour
         }
     }
 
+    public void CheckAllNextTile()
+    {
+        CheckNextTile(NextDirection.Left);
+        CheckNextTile(NextDirection.Right);
+        CheckNextTile(NextDirection.Front);
+        CheckNextTile(NextDirection.Back);
 
+        //Debug.Log("NowGridPosition:" + GetGrid(0, 0));
+        //Debug.Log("NextPlayerMovesCount" + nextPlayerMove.Count);
+        //Debug.Log("NextGoal" + nextPlayerMoveBlock.Count);
+    }
+
+    public void SetNextPlayerMoveBlock(NextDirection direction, GoalBlock goalBlock)
+    {
+        nextPlayerMoveBlock.Add(direction, goalBlock);
+        CheckAllNextTile();
+    }
+
+    public void RemoveNextPlayerMoveBlock(NextDirection direction)
+    {
+        nextPlayerMoveBlock.Remove(direction);
+        //Debug.Log("RemoveNextPlayerMoveBlock[" + direction + "]");
+        CheckAllNextTile();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Clear")
+        {
+            gameManager.isClear = true;
+        }
+    }
 }

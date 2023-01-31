@@ -8,10 +8,13 @@ public class StageMake : MonoBehaviour
 
     private CameraPos cameraPos;
 
+    private StageSelect stageSelect;
+
     public float[,] stage;
 
     public GameObject floor;
     public GameObject block;
+    public GameObject clear;
 
     private Vector3 pos;
 
@@ -20,17 +23,33 @@ public class StageMake : MonoBehaviour
     private float cameraX;
 
     enum TileType
-    { 
+    {
         End = 0,
         Floor = 1,
-        Wall = 2
+        Wall = 2,
+        Clear = 3
     }
 
     private void Awake()
     {
-        
+
         stageSet = GetComponent<StageSet>();
-        stage = stageSet.stage;
+
+        GameObject selectObj = GameObject.Find("StageSelect");
+        stageSelect = selectObj.GetComponent<StageSelect>();
+
+        if (stageSelect.stageNum == 1)
+        {
+            stage = stageSet.stage1;
+        }
+        else if (stageSelect.stageNum == 2)
+        {
+            stage = stageSet.stage2;
+        }
+        else if (stageSelect.stageNum == 3)
+        {
+            stage = stageSet.stage3;
+        }
     }
 
     // Start is called before the first frame update
@@ -59,11 +78,18 @@ public class StageMake : MonoBehaviour
                         Instantiate(floor, pos, Quaternion.identity);
                     }
 
-                    if (stage[i,j] == 2)
+                    if (stage[i, j] == 2)
                     {
                         Instantiate(floor, pos, Quaternion.identity);
                         pos.y = 0;
                         Instantiate(block, pos, Quaternion.identity);
+                    }
+
+                    if (stage[i,j] == 3)
+                    {
+                        Instantiate(floor, pos, Quaternion.identity);
+                        pos.y = 0;
+                        Instantiate(clear, pos, Quaternion.identity);
                     }
                 }
             }
@@ -78,7 +104,7 @@ public class StageMake : MonoBehaviour
 
     public bool IsFloor(Vector2Int grid)
     {
-        return stage[grid.x, grid.y] == (int)TileType.Floor;
+        return stage[grid.x, grid.y] == (int)TileType.Floor || stage[grid.x,grid.y] == (int)TileType.Clear;
     }
 
     public bool IsBlock(Vector2Int grid)
