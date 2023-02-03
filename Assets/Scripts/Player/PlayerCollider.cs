@@ -11,7 +11,8 @@ public class PlayerCollider : MonoBehaviour
     private GoalBlock nextGoalBlock;
 
     public NextDirection myDirection;
-
+    public bool isNextPlayer;
+    public bool isNextGoal;
     // Start is called before the first frame update
     void Start()
     {
@@ -79,12 +80,14 @@ public class PlayerCollider : MonoBehaviour
         {
             nextPlayerMove = other.gameObject.GetComponent<PlayerMove>();
             myPlayerMove.SetNextPlayerMove(myDirection, nextPlayerMove);
+            isNextPlayer = true;
         }
 
         if(other.tag == "GoalBlock")
         {
             nextGoalBlock = other.gameObject.GetComponent<GoalBlock>();
             myPlayerMove.SetNextPlayerMoveBlock(myDirection, nextGoalBlock);
+            isNextGoal = true;
         }
     }
 
@@ -94,12 +97,14 @@ public class PlayerCollider : MonoBehaviour
         {
             nextPlayerMove = other.gameObject.GetComponent<PlayerMove>();
             myPlayerMove.RemoveNextPlayerMove(myDirection);
+            isNextPlayer = false;
         }
 
         if (other.tag == "GoalBlock")
         {
             nextGoalBlock = other.gameObject.GetComponent<GoalBlock>();
             myPlayerMove.RemoveNextPlayerMoveBlock(myDirection);
+            isNextGoal = false;
         }
     }
 }

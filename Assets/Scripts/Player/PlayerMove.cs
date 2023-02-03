@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.PlayerLoop;
+using static UnityEditor.PlayerSettings;
 using static UnityEngine.Networking.UnityWebRequest;
 
 public class PlayerMove : MonoBehaviour
@@ -44,6 +46,15 @@ public class PlayerMove : MonoBehaviour
     public Dictionary<NextDirection, PlayerMove> nextPlayerMove;
     public Dictionary<NextDirection, GoalBlock> nextPlayerMoveBlock;
 
+    private bool pushRightKey;
+    private bool pushLeftKey;
+    private bool pushUpKey;
+    private bool pushDownKey;
+
+    public Vector2Int grid;
+
+    private bool isMoved;
+
     // public NextDirection direction;
 
     // Start is called before the first frame update
@@ -76,7 +87,13 @@ public class PlayerMove : MonoBehaviour
         //isBack = true;
         //isFront = true;
 
+        pushRightKey = false;
+        pushLeftKey = false;
+        pushUpKey = false;
+        pushDownKey = false;
+
         CheckAllNextTile();
+        isMoved = false;
     }
 
     public void CheckAllNextTile()
@@ -100,7 +117,11 @@ public class PlayerMove : MonoBehaviour
             return SetMovable(direction, false);//その方向へは移動できない。
         }
 
-        // directionの向きに隣接している箇所に、障害物があるか否か。
+        //if (gameObject.name == "Player" && direction == NextDirection.Right)
+        //{
+        //    Debug.Log("CheckNextTile Player");
+        //}
+        // directionの向きに隣接している箇所に、playerがあるか否か。
         if (nextPlayerMove.ContainsKey(direction))
         {
             bool nextResult = nextPlayerMove[direction].CheckNextTile(direction);
@@ -133,6 +154,9 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        grid = GetGrid(0, 0);
+        UpdateNextGoalBlockCollision();
+        CheckAllNextTile();
 
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -140,119 +164,34 @@ public class PlayerMove : MonoBehaviour
             //levelRight += 
         }
 
-        ////player
-        //isRight = !nextPlayerMove.ContainsKey(NextDirection.Right);
-        //if (nextPlayerMove.ContainsKey(NextDirection.Right))
-        //{
-        //    if (nextPlayerMove[NextDirection.Right].isRight == true)
-        //    {
-        //        isRight2 = true;
-        //    }
-        //    else
-        //    {
-        //        if (nextPlayerMove[NextDirection.Right].isBlockRight == true)
-        //        {
-        //            if (nextPlayerMove[NextDirection.Right].isRight2 == true)
-        //            {
-        //                isRight2 = true;
-        //            }
-        //            else
-        //            {
-        //                isRight2 = false;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            if (nextPlayerMove[NextDirection.Right].isRight2 == true)
-        //            {
-        //                isRight2 = true;
-        //            }
-        //            else
-        //            {
-        //                isRight2 = false;
-        //            }
-        //        }
-        //    }
-        //}
+    }
 
-        //isLeft = !nextPlayerMove.ContainsKey(NextDirection.Left);
-        //isBack = !nextPlayerMove.ContainsKey(NextDirection.Back);
-        //isFront = !nextPlayerMove.ContainsKey(NextDirection.Front);
-
-
-
-        ////block
-        //isRight = !nextPlayerMoveBlock.ContainsKey(NextDirection.Right);
-        //if (nextPlayerMoveBlock.ContainsKey(NextDirection.Right))
-        //{
-        //    isBlockRight = true;
-
-        //    if (nextPlayerMoveBlock[NextDirection.Right].level <= levelRight)
-        //    {
-        //        isRight2 = true;
-        //        nextPlayerMoveBlock[NextDirection.Right].isRight = true;
-        //    }
-        //}
-
-        //isLeft = !nextPlayerMoveBlock.ContainsKey(NextDirection.Left);
-        //if (nextPlayerMoveBlock.ContainsKey(NextDirection.Left))
-        //{
-        //    isBlockLeft = true;
-        //}
-
-        //isBack = !nextPlayerMoveBlock.ContainsKey(NextDirection.Back);
-        //if (nextPlayerMoveBlock.ContainsKey(NextDirection.Back))
-        //{
-        //    isBlockBack = true;
-        //}
-
-        //isFront = !nextPlayerMoveBlock.ContainsKey(NextDirection.Front);
-        //if (nextPlayerMoveBlock.ContainsKey(NextDirection.Front))
-        //{
-        //    isBlockFront = true;
-        //}
-
-
+    private void LateUpdate()
+    {
         Vector3 pos = transform.position;
-
         if (isRight && (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)))
         {
+
             pos.x += 1;
             transform.position = pos;
             PushNextGoalBlock(NextDirection.Right);
 
-            CheckAllNextTile();
-
+            isMoved = true;
         }
-
-
-
-        //if (stageMake.IsFloor(GetGrid(2, 0)))
-        //{
-        //    //pos.x += 1;
-        //}
-        //else
-        //{
-        //    isRight2 = false;
-        //}
 
         if (isLeft && (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)))
         {
+            if (gameObject.name == "Player2")
+            {
+                Debug.Log("Player2 is moved to left");
+            }
             pos.x -= 1;
             transform.position = pos;
             PushNextGoalBlock(NextDirection.Left);
 
-            CheckAllNextTile();
+            isMoved = true;
 
         }
-        //if (stageMake.stage[Mathf.RoundToInt(pos.x) - 2, Mathf.RoundToInt(pos.z)] == 1)
-        //{
-        //    //pos.x -= 1;
-        //}
-        //else
-        //{
-        //    isLeft2 = false;
-        //}
 
         if (isBack && (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)))
         {
@@ -260,18 +199,9 @@ public class PlayerMove : MonoBehaviour
             transform.position = pos;
             PushNextGoalBlock(NextDirection.Back);
 
-            CheckAllNextTile();
+            isMoved = true;
 
         }
-
-        //if (stageMake.IsFloor(GetGrid(0, 2)))
-        //{
-        //    //pos.z += 1;
-        //}
-        //else
-        //{
-        //    isBack2 = false;
-        //}
 
         if (isFront && (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S)))
         {
@@ -279,19 +209,17 @@ public class PlayerMove : MonoBehaviour
             transform.position = pos;
             PushNextGoalBlock(NextDirection.Front);
 
-            CheckAllNextTile();
+            isMoved = true;
 
         }
-
-        //if (stageMake.stage[Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.z) - 2] == 1)
-        //{
-        //    //pos.z -= 1;
-        //}
-        //else
-        //{
-        //    isFront2 = false;
-        //}
-
+    }
+    private void UpdateNextGoalBlockCollision()
+    {
+        GameObject[] goals = GameObject.FindGameObjectsWithTag("GoalBlock");
+        for (int i = 0; i < goals.Length; i++)
+        {
+            goals[i].GetComponent<GoalBlock>().CheckAllNextTile();
+        }
     }
 
 

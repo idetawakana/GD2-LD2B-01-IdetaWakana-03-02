@@ -22,7 +22,7 @@ public class GoalCollider : MonoBehaviour
         //myPlayerMove = transform.parent.gameObject.GetComponent<PlayerMove>();
         //        nextPlayerMove = new Dictionary<Direction, PlayerMove>();
 
-        myGoalBlock = GetComponent<GoalBlock>();
+        myGoalBlock = transform.parent.gameObject.GetComponent<GoalBlock>();
 
         GameObject managerObj = GameObject.Find("GameManager");
         gameManager = managerObj.GetComponent<GameManager>();
@@ -90,6 +90,12 @@ public class GoalCollider : MonoBehaviour
         //    myPlayerMove.SetNextPlayerMove(myDirection, nextPlayerMove);
         //}
 
+        if (other.tag == "Player")
+        {
+            nextPlayerMove = other.gameObject.GetComponent<PlayerMove>();
+            myGoalBlock.SetNextPlayerMove(myDirection, nextPlayerMove);
+        }
+
         if (other.tag == "GoalBlock")
         {
             nextGoalBlock = other.gameObject.GetComponent<GoalBlock>();
@@ -104,6 +110,12 @@ public class GoalCollider : MonoBehaviour
         //    nextPlayerMove = other.gameObject.GetComponent<PlayerMove>();
         //    myPlayerMove.RemoveNextPlayerMove(myDirection);
         //}
+
+        if (other.tag == "Player")
+        {
+            nextPlayerMove = other.gameObject.GetComponent<PlayerMove>();
+            myGoalBlock.RemoveNextPlayerMove(myDirection);
+        }
 
         if (other.tag == "GoalBlock")
         {

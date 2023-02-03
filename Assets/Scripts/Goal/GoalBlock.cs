@@ -30,6 +30,7 @@ public class GoalBlock : MonoBehaviour
     public bool isBack;
     public bool isFront;
 
+    public Dictionary<NextDirection, PlayerMove> nextPlayerMove;
     public Dictionary<NextDirection, GoalBlock> nextPlayerMoveBlock;
 
 
@@ -43,6 +44,7 @@ public class GoalBlock : MonoBehaviour
         GameObject selectObj = GameObject.Find("StageSelect");
         stageSelect = selectObj.GetComponent<StageSelect>();
 
+        nextPlayerMove = new Dictionary<NextDirection, PlayerMove>();
         nextPlayerMoveBlock = new Dictionary<NextDirection, GoalBlock>();
 
         if (stageSelect.stageNum == 1)
@@ -75,17 +77,37 @@ public class GoalBlock : MonoBehaviour
             return SetMovable(direction, false);//その方向へは移動できない。
         }
 
+        if (nextPlayerMove.ContainsKey(direction))
+        {
+            bool nextResult = nextPlayerMove[direction].CheckNextTile(direction);
+            bool result = SetMovable(direction, nextResult);
+            return result;
+        }
+
         // TODO: ゴールブロックも、付近のゴールブロックを探す必要があるため、四方向の当たり判定が必要。
         // directionの向きに隣接している箇所に、障害物があるか否か。
+        //if (nextPlayerMoveBlock.ContainsKey(direction))
+        //{
+        //    return SetMovable(direction, nextPlayerMoveBlock[direction].CheckNextTile(direction));
+        //}
+
         if (nextPlayerMoveBlock.ContainsKey(direction))
         {
-            return SetMovable(direction, nextPlayerMoveBlock[direction].CheckNextTile(direction));
+            if (IsPushNextGoalBlock(direction))
+            {
+                return SetMovable(direction, nextPlayerMoveBlock[direction].CheckNextTile(direction));
+            }
+            else
+            {
+                return SetMovable(direction, false);
+            }
         }
 
         if (stageMake.IsFloor(GetGrid(direction)))
         {
             return SetMovable(direction, true);//その方向へは移動できない。
         }
+
 
         return false; //例外ないはず
 
@@ -294,6 +316,20 @@ public class GoalBlock : MonoBehaviour
         //Debug.Log("NextGoal" + nextPlayerMoveBlock.Count);
     }
 
+    public void SetNextPlayerMove(NextDirection direction, PlayerMove playerMove)
+    {
+        nextPlayerMove.Add(direction, playerMove);
+        CheckAllNextTile();
+
+    }
+
+    public void RemoveNextPlayerMove(NextDirection direction)
+    {
+        nextPlayerMove.Remove(direction);
+        CheckAllNextTile();
+
+    }
+
     public void SetNextPlayerMoveBlock(NextDirection direction, GoalBlock goalBlock)
     {
         nextPlayerMoveBlock.Add(direction, goalBlock);
@@ -307,11 +343,61 @@ public class GoalBlock : MonoBehaviour
         CheckAllNextTile();
     }
 
+    private void PushNextGoalBlock(NextDirection moveDiretion)
+    {
+        if (!nextPlayerMoveBlock.ContainsKey(moveDiretion)) { return; }
+
+        float pushLevel = GetPushLevel(moveDiretion);
+
+        if (nextPlayerMoveBlock[moveDiretion].level <= pushLevel)
+        {
+            nextPlayerMoveBlock[moveDiretion].Push(moveDiretion);
+        }
+    }
+
+    public float GetPushLevel(NextDirection direction)
+    {
+        float pushLevel = 1;
+
+        if (nextPlayerMove.ContainsKey(GetBehind(direction)))
+        {
+            pushLevel += nextPlayerMove[GetBehind(direction)].GetPushLevel(direction);
+        }
+        return pushLevel;
+    }
+
+
+    private NextDirection GetBehind(NextDirection direction)
+    {
+        switch (direction)
+        {
+            case NextDirection.Right:
+                return NextDirection.Left;
+                break;
+            case NextDirection.Left:
+                return NextDirection.Right;
+                break;
+            case NextDirection.Back:
+                return NextDirection.Front;
+                break;
+            case NextDirection.Front:
+                return NextDirection.Back;
+                break;
+        }
+        return NextDirection.LeftBack;
+    }
+        private bool IsPushNextGoalBlock(NextDirection moveDiretion)
+    {
+        float pushLevel = GetPushLevel(moveDiretion);
+
+        return (nextPlayerMoveBlock[moveDiretion].level <= pushLevel);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Clear")
-        {
-            gameManager.isClear = true;
-        }
+        //if (other.tag == "Clear")
+        //{
+        //    gameManager.isClear = true;
+        //}
     }
 }
