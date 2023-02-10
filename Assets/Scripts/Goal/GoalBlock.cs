@@ -65,6 +65,9 @@ public class GoalBlock : MonoBehaviour
         {
             transform.position = pos3;
             level = level3;
+            Text1.SetActive(false);
+            Text2.SetActive(true); Text1.SetActive(false);
+            Text2.SetActive(true);
         }
     }
 

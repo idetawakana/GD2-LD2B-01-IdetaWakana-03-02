@@ -1,11 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.PlayerLoop;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.Networking.UnityWebRequest;
+
 
 public class PlayerMove : MonoBehaviour
 {
@@ -46,6 +42,10 @@ public class PlayerMove : MonoBehaviour
     public Dictionary<NextDirection, PlayerMove> nextPlayerMove;
     public Dictionary<NextDirection, GoalBlock> nextPlayerMoveBlock;
 
+    public List<PlayerMove> unionPlayerMove;
+
+    public bool isUnion;
+
     private bool pushRightKey;
     private bool pushLeftKey;
     private bool pushUpKey;
@@ -54,6 +54,8 @@ public class PlayerMove : MonoBehaviour
     public Vector2Int grid;
 
     private bool isMoved;
+
+    private SoundManager soundManager;
 
     // public NextDirection direction;
 
@@ -69,6 +71,9 @@ public class PlayerMove : MonoBehaviour
         GameObject selectObj = GameObject.Find("StageSelect");
         stageSelect = selectObj.GetComponent<StageSelect>();
 
+        GameObject soundObj = GameObject.Find("SoundManager");
+        soundManager = soundObj.GetComponent<SoundManager>();
+
         if (stageSelect.stageNum == 1)
         {
             transform.position = pos1;
@@ -81,11 +86,6 @@ public class PlayerMove : MonoBehaviour
         {
             transform.position = pos3;
         }
-
-        //isRight = true;
-        //isLeft = true;
-        //isBack = true;
-        //isFront = true;
 
         pushRightKey = false;
         pushLeftKey = false;
@@ -175,19 +175,19 @@ public class PlayerMove : MonoBehaviour
             pos.x += 1;
             transform.position = pos;
             PushNextGoalBlock(NextDirection.Right);
+            soundManager.PlayMoveSE();
 
             isMoved = true;
         }
 
         if (isLeft && (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)))
         {
-            if (gameObject.name == "Player2")
-            {
-                Debug.Log("Player2 is moved to left");
-            }
+
             pos.x -= 1;
             transform.position = pos;
             PushNextGoalBlock(NextDirection.Left);
+            soundManager.PlayMoveSE();
+
 
             isMoved = true;
 
@@ -198,6 +198,8 @@ public class PlayerMove : MonoBehaviour
             pos.z += 1;
             transform.position = pos;
             PushNextGoalBlock(NextDirection.Back);
+            soundManager.PlayMoveSE();
+
 
             isMoved = true;
 
@@ -208,10 +210,16 @@ public class PlayerMove : MonoBehaviour
             pos.z -= 1;
             transform.position = pos;
             PushNextGoalBlock(NextDirection.Front);
+            soundManager.PlayMoveSE();
+
 
             isMoved = true;
-
         }
+
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    //unionPlayerMove.Add(nextPlayerMove)
+        //}
     }
     private void UpdateNextGoalBlockCollision()
     {

@@ -12,11 +12,19 @@ public class GameManager : MonoBehaviour
     public GameObject clearText;
 
     public StageSelect stageSelect;
+
+    private SoundManager soundManager;
+
+    //public AudioSource clearSE;
     // Start is called before the first frame update
     void Start()
     {
         GameObject selectObj = GameObject.Find("StageSelect");
         stageSelect = selectObj.GetComponent<StageSelect>();
+
+        GameObject soundObj = GameObject.Find("SoundManager");
+        soundManager = soundObj.GetComponent<SoundManager>();
+
         isClear = false;
     }
 
@@ -33,7 +41,7 @@ public class GameManager : MonoBehaviour
             else if (clearTimer < 1)
             {
                 stageSelect.stageNum++;
-                if (stageSelect.stageNum <= 2)
+                if (stageSelect.stageNum <= 3)
                 {
                     SceneReset();
                 }
@@ -61,4 +69,9 @@ public class GameManager : MonoBehaviour
         string activeSceneName = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(activeSceneName);
     }
+
+    //public void PlayClearSE()
+    //{
+    //    clearSE.Play();
+    //}
 }
