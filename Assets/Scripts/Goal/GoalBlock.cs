@@ -18,12 +18,14 @@ public class GoalBlock : MonoBehaviour
     public Vector3 pos1;
     public Vector3 pos2;
     public Vector3 pos3;
+    public Vector3 pos4;
 
     public float level;
 
     public float level1;
     public float level2;
     public float level3;
+    public float level4;
 
     public bool isRight;
     public bool isLeft;
@@ -51,23 +53,27 @@ public class GoalBlock : MonoBehaviour
         {
             transform.position = pos1;
             level = level1;
-            Text1.SetActive(true);
-            Text2.SetActive(false);
+            //Text1.SetActive(true);
+            //Text2.SetActive(false);
         }
         else if (selectManager.stageNum == 2)
         {
             transform.position = pos2;
             level = level2;
-            Text1.SetActive(false);
-            Text2.SetActive(true);
+            //Text1.SetActive(false);
+            //Text2.SetActive(true);
         }
         else if (selectManager.stageNum == 3)
         {
             transform.position = pos3;
             level = level3;
-            Text1.SetActive(false);
-            Text2.SetActive(true); Text1.SetActive(false);
-            Text2.SetActive(true);
+            //Text1.SetActive(false);
+            //Text2.SetActive(true); Text1.SetActive(false);
+            //Text2.SetActive(true);
+        }else if(selectManager.stageNum == 4)
+        {
+            transform.position = pos4;
+            level = level4;
         }
     }
 

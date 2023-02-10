@@ -28,7 +28,7 @@ public class SelectManager : MonoBehaviour
             {
                 soundManager.PlaySelectSE();
 
-                if (stageNum == 3)
+                if (stageNum == 4)
                 {
                     stageNum = 1;
                 }
@@ -44,7 +44,7 @@ public class SelectManager : MonoBehaviour
 
                 if (stageNum == 1)
                 {
-                    stageNum = 3;
+                    stageNum = 4;
                 }
                 else
                 {
@@ -52,9 +52,9 @@ public class SelectManager : MonoBehaviour
                 }
             }
 
-            if (stageNum > 3)
+            if (stageNum > 4)
             {
-                stageNum = 3;
+                stageNum = 4;
             }
 
             if (Input.GetKeyDown(KeyCode.Space))

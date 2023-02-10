@@ -19,14 +19,18 @@ public class Yazirushi : MonoBehaviour
     {
         if(selectManager.stageNum == 1)
         {
-            pos.x = 437;
+            pos.x = 731;
         }else if (selectManager.stageNum == 2)
         {
-            pos.x = 796;
+            pos.x = 899;
         }
         else if (selectManager.stageNum == 3)
         {
-            pos.x = 1150;
+            pos.x = 1075;
+        }
+        else if (selectManager.stageNum == 4)
+        {
+            pos.x = 1250;
         }
 
         transform.position = pos;

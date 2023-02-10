@@ -50,6 +50,10 @@ public class StageMake : MonoBehaviour
         {
             stage = stageSet.stage3;
         }
+        else if (selectManager.stageNum == 4)
+        {
+            stage = stageSet.stage4;
+        }
     }
 
     // Start is called before the first frame update

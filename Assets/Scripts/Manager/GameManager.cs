@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
             else if (clearTimer < 1)
             {
                 selectManager.stageNum++;
-                if (selectManager.stageNum <= 3)
+                if (selectManager.stageNum <= 4)
                 {
                     SceneReset();
                 }

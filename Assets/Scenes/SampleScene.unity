@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &98827693
 RectTransform:
   m_ObjectHideFlags: 0
@@ -219,7 +219,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &153533533
 Transform:
   m_ObjectHideFlags: 0
@@ -255,7 +255,7 @@ TextMesh:
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   m_Color:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4283124555
 --- !u!23 &153533535
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -427,10 +427,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2070113370746694097, guid: 49ddef40b74c4a34881ae3cbd29f9c61, type: 3}
       propertyPath: pos3.x
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2070113370746694097, guid: 49ddef40b74c4a34881ae3cbd29f9c61, type: 3}
       propertyPath: pos3.z
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070113370746694097, guid: 49ddef40b74c4a34881ae3cbd29f9c61, type: 3}
+      propertyPath: pos4.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070113370746694097, guid: 49ddef40b74c4a34881ae3cbd29f9c61, type: 3}
+      propertyPath: pos4.z
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2070113370746694101, guid: 49ddef40b74c4a34881ae3cbd29f9c61, type: 3}
@@ -1037,13 +1045,15 @@ MonoBehaviour:
   gameManager: {fileID: 1391910231}
   Text1: {fileID: 2132041266}
   Text2: {fileID: 153533532}
-  pos1: {x: 3, y: 0, z: 4}
+  pos1: {x: 4, y: 0, z: 4}
   pos2: {x: 4, y: 0, z: 5}
-  pos3: {x: 4, y: 0, z: 3}
+  pos3: {x: 4, y: 0, z: 5}
+  pos4: {x: 4, y: 0, z: 3}
   level: 2
-  level1: 1
+  level1: 2
   level2: 2
   level3: 2
+  level4: 2
   isRight: 0
   isLeft: 0
   isBack: 0
@@ -1080,7 +1090,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a643f8dc264ebd5449fec65b76205d07, type: 2}
+  - {fileID: 2100000, guid: 5c02fb608121b794786a04b180d87b12, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1423,7 +1433,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2132041267
 Transform:
   m_ObjectHideFlags: 0
@@ -1459,7 +1469,7 @@ TextMesh:
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   m_Color:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4283124555
 --- !u!23 &2132041269
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1538,10 +1548,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2070113370746694097, guid: 49ddef40b74c4a34881ae3cbd29f9c61, type: 3}
       propertyPath: pos3.x
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2070113370746694097, guid: 49ddef40b74c4a34881ae3cbd29f9c61, type: 3}
       propertyPath: pos3.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070113370746694097, guid: 49ddef40b74c4a34881ae3cbd29f9c61, type: 3}
+      propertyPath: pos4.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070113370746694097, guid: 49ddef40b74c4a34881ae3cbd29f9c61, type: 3}
+      propertyPath: pos4.z
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2070113370746694101, guid: 49ddef40b74c4a34881ae3cbd29f9c61, type: 3}

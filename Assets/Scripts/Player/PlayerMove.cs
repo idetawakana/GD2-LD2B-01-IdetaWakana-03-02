@@ -12,6 +12,7 @@ public class PlayerMove : MonoBehaviour
     public Vector3 pos1;
     public Vector3 pos2;
     public Vector3 pos3;
+    public Vector3 pos4;
 
     public bool isRight;
     public bool isRight2;
@@ -85,6 +86,10 @@ public class PlayerMove : MonoBehaviour
         else if (selectManager.stageNum == 3)
         {
             transform.position = pos3;
+        }
+        else if (selectManager.stageNum == 4)
+        {
+            transform.position = pos4;
         }
 
         pushRightKey = false;
