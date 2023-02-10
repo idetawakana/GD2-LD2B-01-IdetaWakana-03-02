@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject clearText;
 
-    public StageSelect stageSelect;
+    public SelectManager selectManager;
 
     private SoundManager soundManager;
 
@@ -19,8 +19,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject selectObj = GameObject.Find("StageSelect");
-        stageSelect = selectObj.GetComponent<StageSelect>();
+        GameObject selectObj = GameObject.Find("SelectManager");
+        selectManager = selectObj.GetComponent<SelectManager>();
 
         GameObject soundObj = GameObject.Find("SoundManager");
         soundManager = soundObj.GetComponent<SoundManager>();
@@ -40,22 +40,22 @@ public class GameManager : MonoBehaviour
             }
             else if (clearTimer < 1)
             {
-                stageSelect.stageNum++;
-                if (stageSelect.stageNum <= 3)
+                selectManager.stageNum++;
+                if (selectManager.stageNum <= 3)
                 {
                     SceneReset();
                 }
                 else
                 {
-                    stageSelect.stageNum = 1;
-                    SceneReset();
+                    //selectManager.stageNum = 1;
+                    ChangeScene("StageSelect");
                 }
             }
         }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            //stageSelect.stageNum++;
+            //selectManager.stageNum++;
             SceneReset();
         }
     }

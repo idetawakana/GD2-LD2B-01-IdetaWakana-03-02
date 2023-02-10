@@ -8,7 +8,7 @@ public class StageMake : MonoBehaviour
 
     private CameraPos cameraPos;
 
-    private StageSelect stageSelect;
+    private SelectManager selectManager;
 
     public float[,] stage;
 
@@ -35,18 +35,18 @@ public class StageMake : MonoBehaviour
 
         stageSet = GetComponent<StageSet>();
 
-        GameObject selectObj = GameObject.Find("StageSelect");
-        stageSelect = selectObj.GetComponent<StageSelect>();
+        GameObject selectObj = GameObject.Find("SelectManager");
+        selectManager = selectObj.GetComponent<SelectManager>();
 
-        if (stageSelect.stageNum == 1)
+        if (selectManager.stageNum == 1)
         {
             stage = stageSet.stage1;
         }
-        else if (stageSelect.stageNum == 2)
+        else if (selectManager.stageNum == 2)
         {
             stage = stageSet.stage2;
         }
-        else if (stageSelect.stageNum == 3)
+        else if (selectManager.stageNum == 3)
         {
             stage = stageSet.stage3;
         }

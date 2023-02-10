@@ -6,7 +6,7 @@ public class GoalBlock : MonoBehaviour
 {
     private StageMake stageMake;
 
-    private StageSelect stageSelect;
+    private SelectManager selectManager;
 
     public GameManager gameManager;
 
@@ -41,27 +41,27 @@ public class GoalBlock : MonoBehaviour
         GameObject stageObj = GameObject.Find("Stage");
         stageMake = stageObj.GetComponent<StageMake>();
 
-        GameObject selectObj = GameObject.Find("StageSelect");
-        stageSelect = selectObj.GetComponent<StageSelect>();
+        GameObject selectObj = GameObject.Find("SelectManager");
+        selectManager = selectObj.GetComponent<SelectManager>();
 
         nextPlayerMove = new Dictionary<NextDirection, PlayerMove>();
         nextPlayerMoveBlock = new Dictionary<NextDirection, GoalBlock>();
 
-        if (stageSelect.stageNum == 1)
+        if (selectManager.stageNum == 1)
         {
             transform.position = pos1;
             level = level1;
             Text1.SetActive(true);
             Text2.SetActive(false);
         }
-        else if (stageSelect.stageNum == 2)
+        else if (selectManager.stageNum == 2)
         {
             transform.position = pos2;
             level = level2;
             Text1.SetActive(false);
             Text2.SetActive(true);
         }
-        else if (stageSelect.stageNum == 3)
+        else if (selectManager.stageNum == 3)
         {
             transform.position = pos3;
             level = level3;

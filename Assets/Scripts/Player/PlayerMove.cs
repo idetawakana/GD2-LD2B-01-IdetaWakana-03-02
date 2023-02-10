@@ -7,7 +7,7 @@ public class PlayerMove : MonoBehaviour
 {
     private StageMake stageMake;
 
-    private StageSelect stageSelect;
+    private SelectManager selectManager;
 
     public Vector3 pos1;
     public Vector3 pos2;
@@ -68,21 +68,21 @@ public class PlayerMove : MonoBehaviour
         nextPlayerMove = new Dictionary<NextDirection, PlayerMove>();
         nextPlayerMoveBlock = new Dictionary<NextDirection, GoalBlock>();
 
-        GameObject selectObj = GameObject.Find("StageSelect");
-        stageSelect = selectObj.GetComponent<StageSelect>();
+        GameObject selectObj = GameObject.Find("SelectManager");
+        selectManager = selectObj.GetComponent<SelectManager>();
 
         GameObject soundObj = GameObject.Find("SoundManager");
         soundManager = soundObj.GetComponent<SoundManager>();
 
-        if (stageSelect.stageNum == 1)
+        if (selectManager.stageNum == 1)
         {
             transform.position = pos1;
         }
-        else if (stageSelect.stageNum == 2)
+        else if (selectManager.stageNum == 2)
         {
             transform.position = pos2;
         }
-        else if (stageSelect.stageNum == 3)
+        else if (selectManager.stageNum == 3)
         {
             transform.position = pos3;
         }
@@ -210,7 +210,7 @@ public class PlayerMove : MonoBehaviour
             pos.z -= 1;
             transform.position = pos;
             PushNextGoalBlock(NextDirection.Front);
-            soundManager.PlayMoveSE();
+                        soundManager.PlayMoveSE();
 
 
             isMoved = true;
